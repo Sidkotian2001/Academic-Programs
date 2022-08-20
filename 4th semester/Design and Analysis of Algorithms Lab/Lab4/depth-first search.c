@@ -66,6 +66,6 @@ int main() {
 	s = (STACK*)malloc(sizeof(STACK));
 	init(s);
 	dfs(s, adj_mat, visit, s->arr[s->top]);
-
+	printf("\n");
 	return 0;
 }
