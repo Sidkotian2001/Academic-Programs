@@ -1,3 +1,4 @@
+//That takes C program as input, recognizes all the keywords and prints them in upper case.
 #include <stdio.h>
 #include <stdlib.h> 
 

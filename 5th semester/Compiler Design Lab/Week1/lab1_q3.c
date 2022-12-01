@@ -1,3 +1,4 @@
+//That merges lines alternatively from 2 files and stores it in a resultant file.
 #include <stdio.h>
 #include <stdlib.h>
 
