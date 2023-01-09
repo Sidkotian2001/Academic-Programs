@@ -1,0 +1,58 @@
+create table employee(
+EmpNo number(5) primary key,
+EmpName varchar2(20) not null,
+Gender varchar(1) not null check (Gender in ('M', 'F')),
+Salary number(8,2) not null,
+Address varchar2(10) not null,
+Dno number(2));
+
+create table department(
+DeptNo number(2) primary key,
+DeptName varchar(10) not null unique);
+
+alter table employee
+add foreign key (Dno) references department(DeptNo);
+
+insert into department values(20, 'CSE');
+insert into department values(21, 'ECE');
+insert into department values(22, 'CCE');
+insert into department values(23, 'IT');
+insert into department values(24, 'EEE');
+insert into employee values(150, 'Sid', 'M', 50000.32, 'Mumbai', 20);
+insert into employee values(151, 'Rhea', 'F', 1000.32, 'Manipal', 20);
+insert into employee values(152, 'Aman', 'M', 64000.32, 'Mangalore', 22);
+insert into employee values(153, 'Khushi', 'F', 5000.32, 'Delhi', 21);
+insert into employee values(154, 'Josh', 'M', 50004.32, 'Bangalore', 24);
+
+insert into employee values(155, 'Ankit', 'T', 500.32, 'Mumbai', 20);
+insert into employee values(150, 'Gita', 'F', 200.32, 'Mumbai', 23);
+
+Not possible because you cannot insert tuple which violate the integirty constraints
+
+alter table employee
+drop column Dno;
+alter table employee add(Dno number(2) references department(DeptNo) on delete cascade);
+update employee set Dno = 20;
+Similarly the rest
+
+alter table employee
+add constraint my_constraint salary number(8,2) default(10000);
+
+
+
+9
+select name, dept_name from student;
+10
+select name from instructor;
+11
+select title from course where credits = 3;
+12
+select course_id, title from course, student where course.dept_name = student.dept_name and student.ID = 12345;
+13
+select name from instructor where salary > 40000 and salary < 90000;
+14
+select instructor.id from instructor where instructor.id not in (select id from teaches);
+16
+select student.name, course.title as c_name, course_id
+from student natural join course natural join takes
+where takes.year = 2010;

@@ -1,0 +1,78 @@
+create table employee
+	(
+	fname varchar(20),
+	minit varchar(1),
+	lname varchar(20),
+	salary number(5,2),
+	sex char,
+	address varchar(20),
+	ssn integer primary key,
+	bday date
+	);
+
+create table department
+	(
+	dept_number number(2),
+	dept_name varchar(20),
+	locations varchar(20),
+	primary key(dept_name, dept_number)
+	);
+
+
+create table dependent
+	(
+	name varchar(20),
+	sex varchar(1),
+	birth_date date,
+	relationship varchar(10)
+	primary key(name)
+	);
+
+
+create table project
+	(
+	locations varchar(20),
+	p_name varchar(20),
+	p_no number(3),
+	primary key(project_num)
+	);
+
+create table supervision
+	(
+	supervisor number references employee (ssn),
+	supervisee number references employee (ssn)
+	);
+
+create table works_for(
+	ssn integer references employee,
+	dept_name varchar(20),
+	dept_number number(2),
+	foreign key(dept_name, dept_number) references department
+	);
+
+create table works_on(
+	ssn integer references employee,
+	hours number(5,2),
+	p_name varchar(15),
+	p_no integer,
+	foreign key(p_name, p_no) refernces project
+	);
+
+create table manages
+	(
+	start_date date,	
+	ssn integer refernces employee,
+	dept_name varchar(20),
+	dept_number number(2),
+	foreign key (dept_name, dept_number) references department
+	);
+
+create table controls
+	(
+	dept_name varchar(20),
+	dept_number number(2),
+	p_name varchar(20),
+	p_no varchar(20),
+	foreign key(dept_name, dept_number) references department
+	foreign key(p_name, p_no) references department
+	);
