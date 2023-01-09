@@ -1,0 +1,72 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+
+void printarr(int arr[],int n) {
+	for (int i = 0; i < n; i++) {
+		printf("%d ", arr[i]);
+	}
+	printf("\n");
+}
+
+void lru(char *ref, int n) {
+	int arr[7];
+	for (int i = 0; i < n; i++) {
+		arr[i] = -1;
+	}
+	for (int i = 0; i < strlen(ref); i++) {
+		int found = 0, placed = 0;
+		int page = ref[i] - '0';
+		printf("Current page : %d\n", page);
+		for (int j = 0; j < n; j++) {
+			if (arr[j] == page) {
+				found = 1;
+				break;
+			}
+			if (arr[j] == -1) {
+				arr[j] = page;
+				placed = 1;
+				break;
+			}
+		}
+		if (found) {
+			printf("Page hit\n");
+			continue;
+		}
+		if (!placed) {
+			int distance[7], max_distance = -1, pos;
+			int c = 0;
+			while (c < n) {
+				int j;
+				for (j = i; j >= 0; j--) {
+					if (arr[c] == ref[j] - '0') {
+						break;
+					}
+				}
+				distance[c] = i - j;
+				if (distance[c] > max_distance) {
+					max_distance = distance[c];
+					pos = c;
+				}
+				c++;
+			}
+			arr[pos] = page;
+		}
+		printarr(arr, n);
+	}
+}
+
+int main() {
+	int n;
+
+    printf("Enter the number of frames\n");
+    scanf("%d", &n);
+
+    //The order of pages
+	char *str = "70120304230321201701";
+	int len = strlen(str);
+
+	lru(str,n);
+	return 0;
+}
